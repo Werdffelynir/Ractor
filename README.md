@@ -39,28 +39,41 @@ $param['flashKey'] = '_mykey';
 
 ##СВОЙСТВА:
 
-```
-urlHost 
-```
+
+#### urlHost 
 содержит имя домена
 
+Пример:
 ```
-url
+$hostName = $Re->urlHost; // dev-ready.loc
 ```
+
+
+#### url
 содержить URL приложения
-    
+
+Пример:
 ```
-pathRoot
+$url = $Re->url; // http://dev-ready.loc/poliApps/ractorPro
 ```
+
+
+#### pathRoot
 содержить абсолютный путь к директории
-    
-    
+
+Пример:
+```
+$root = $Re->pathRoot; // Для WIN E:\SERVER\domains\dev-ready.loc\poliApps\ractorPro
+```
+
+
 ##МЕТОДЫ:
 
-```
-re()
-```
+
+#### re()
+
 Роутер, основной инструмен класса, осуществляет переходы по URL с загрузкой определенных функций
+
 Пример:
 ```
 $Re->re('/hello', function() {
@@ -68,44 +81,45 @@ $Re->re('/hello', function() {
 });
 ```
 
-```
-getInstance()
-```
+
+#### getInstance()
+
 Статический метод доступу к классу.
 
-```
-run()
-```
+
+#### run()
+
 Запуск класса, метод должен быть вызван в конце скрипта. Обезательно.
 
-```
-path($domin = null)
-```
+
+#### path([domin])
+
 Принимает домен. только для внутренего использования.
 
-```
-thisUrl()
-```
+
+#### thisUrl()
+
 Возвращает текущий URL адрес
 
-```
-redirect($url = null, $code = 302, $delay = 0)
-```
+
+#### redirect([url] [,code] [,delay])
 
 Делает редирект. Работает только через заголовки.
-    $url    - примисает отностиельный от корня приложения адрес запроса. 
-    $code   - код заголовка
-    $delay  - рефреш с задержкой. принимает int в секундах
-    
+
+- `$url`    - примисает отностиельный от корня приложения адрес запроса
+- `$code`   - код заголовка
+- `$delay`  - рефреш с задержкой. принимает int в секундах
+
 Пример:
 ```
 $Re->redirect("/admin/login");
 ```
 
-```
-error($code = null, $callback = null)
-```
+
+#### error([code] [,callback = null)
+
 Устанавлевает выполнение функции для кода заголовка ошибки
+
 Пример:
 ```
 function error405($masseg = null){
@@ -116,29 +130,28 @@ $Re->error("400", "error405");
 $Re->halt(400, 'Ошибка видна только в созданых функциях обработки');
 ```
 
-```
-halt($code = null, $message = null)
-```
+#### halt([code] [,$message])
+
 Останавлевает текущий запрос. Сожет принимать код ошибки, который затем обрабатываеться, как на примере выше, и сообщение.
 
-```
-http_status($code = null)
-```
+
+#### http_status(code)
+
 Возвращает статус HTTP заголовка поп его коду. Для внутренего использования.
 
-``` 
-apply($callable, $args = array())
-```
+
+#### apply(callable [, $args_array])
+
 Вызов функции с аргументами в массиве. Для внутренего использования и не только.
 
-```
-call($callable, $arg = null)
-```
+
+#### call(callable [, $arg])
+
 Вызов функции с аргументами. Для внутренего использования и не только.
 
-```
-add_action($event = null, $callback = null)
-```
+
+#### add_action(event, callback)
+
 Хук. Возвращает или задает обработчиков событий. Два аргумента $event имя события должно быть уже зарегестирировано методом exec_action()
 и $callback функция для обработки, которая вызываеться в месте устанвки метода exec_action() с одноименным аргументом.
 Возвращает NULL для незарегистированых имен.
@@ -147,10 +160,11 @@ add_action($event = null, $callback = null)
 $route->add_action("action_name", "my_foo");
 ```
 
-```
-exec_action($event)
-```
+
+#### exec_action(event)
+
 Хук. Назначения и установка позиции выполнения обработчиков событий.
+
 Пример:
 ```
     $route->exec_action("action_name");
@@ -159,10 +173,11 @@ exec_action($event)
     }
 ```
 
-```
-before($callback)
-```
+
+#### before(callback)
+
 Регистрация функции для обратного вызова. Обрабатываеться событие до роутинга.
+
 Пример:
 ```
     $route->before("action_foo_before");
@@ -171,19 +186,22 @@ before($callback)
     }
 ```
 
-```
-after($callback)
-```
+
+#### after(callback)
+
 Регистрация функции для обратного вызова. Обрабатываеться событие после роутинга.
+
 Пример:
 ```
     $route->after("action_foo_after");
     function action_foo_after(){
         echo "<h1>action_foo_after</h1>";
     }
-
-flash($key = null, $value = null, $keep = true)
 ```
 
+
+#### flash(key [, $value] [, $keep])
+
+Вспышка. используеться для одноразовой передачи сообщения на следующий запрос. Использует сесию и после запись удаляет или хранит.
 
 
