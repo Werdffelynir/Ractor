@@ -94,7 +94,7 @@ path($domin = null)
 thisUrl()
     Возвращает текущий URL адрес
     
-redirect($url = null, $code = 302, $delay = 0)
+redirect($url = null, $code = 302, $delay = 0) || redirectForce
     Делает редирект. Работает только через заголовки.
         $url    - примисает отностиельный от корня приложения адрес запроса. 
         $code   - код заголовка
